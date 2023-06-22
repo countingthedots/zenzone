@@ -50,7 +50,7 @@ class GamePage extends StatelessWidget {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-                GoRouter.of(context).go('/exercise');
+                GoRouter.of(context).go('/home/exercise');
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,

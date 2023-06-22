@@ -145,7 +145,7 @@ class _BreathePageState extends State<BreathePage>
                     boxShadow: isBreathing
                         ? [
                       BoxShadow(
-                        color: Colors.black45,
+                        color: Colors.blueGrey,
                         blurRadius: 30 * scale,
                         spreadRadius: 15 * scale,
                       ),
