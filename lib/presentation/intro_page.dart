@@ -8,10 +8,9 @@ class IntroPage extends StatelessWidget {
   //const IntroPage({super.key});
 
   static const List<String> imageList = [
-    'lib/assets/images/monster_h.png',
-    'lib/assets/images/monster_hh.png',
-    'lib/assets/images/monster_hhh.png',
-    'lib/assets/images/monster_hhhh.png',
+    'lib/assets/images/m1.png',
+    'lib/assets/images/m2.png',
+    'lib/assets/images/m3.png',
   ];
 
   int current = 0;
@@ -21,28 +20,6 @@ class IntroPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            alignment: Alignment.topRight,
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                GoRouter.of(context).go('/home');
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                primary:
-                    const Color.fromRGBO(222, 184, 117, 0), // Set button color
-              ),
-              child: const Text(
-                'Skip',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(top: 80.0),
             child: Align(
@@ -52,32 +29,12 @@ class IntroPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Text(
-                    'Hey! I am your personal assistant',
+                    'Hey! I am your personal assistant\n\nI will help you overcome anxiety and panic attacks.\n\nFirst, choose my appearance\n',
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black45,
+                      fontFamily: 'BraahOne',
+                      color: Colors.black54,
                       // Set text color
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'I will help you overcome anxiety and panic attacks.',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black45, // Set text color
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'First, choose my appearance',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black45, // Set text color
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -98,7 +55,7 @@ class IntroPage extends StatelessWidget {
                       );
                     }).toList(),
                     options: CarouselOptions(
-                      height: 300.0,
+                      height: 350.0,
                       autoPlay: false,
                       aspectRatio: 16 / 9,
                       enlargeCenterPage: true,

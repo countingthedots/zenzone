@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import '../application/locator.dart';
 
 class HomePage extends StatelessWidget {
-  String monsterAsset = 'monster_h${'h' * locator.get<GetStorage>().read('monsterNumber')}.png';
+  String monsterAsset = 'm${1 +  locator.get<GetStorage>().read('monsterNumber')}.png';
 
   HomePage({super.key});
   @override

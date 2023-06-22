@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:zenzone/presentation/exercise_page.dart';
 
 import 'package:zenzone/presentation/intro_page.dart';
 import 'package:zenzone/presentation/main_page.dart';
@@ -23,6 +24,11 @@ GoRouter goRouter = GoRouter(initialLocation: '/splash_screen', observers: [
     name: 'home',
     path: '/home',
     builder: (context, state) => MainPage(),
+  ),
+  GoRoute(
+      name: 'exercise',
+      path: '/home/exercise',
+      builder: (context, state) => ExercisePage(),
   ),
   GoRoute(
     name: 'auth',
