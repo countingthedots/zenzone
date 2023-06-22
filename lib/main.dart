@@ -1,11 +1,31 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:zenzone/application/locator.dart';
 import 'package:zenzone/application/router.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async{
+  // if(!Platform.isWindows){
+  //   await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  //   );
+  // }
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupLocator();
+  if(kIsWeb || Platform.isAndroid || Platform.isIOS)
+    {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+        );
+    }
+
   runApp(const ZenZone());
 }
 
