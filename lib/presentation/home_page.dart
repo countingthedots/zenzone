@@ -1,42 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get_storage/get_storage.dart';
 
+import '../application/locator.dart';
 
-class HomePage extends StatelessWidget{
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  String monsterAsset = 'monster_h${'h' * locator.get<GetStorage>().read('monsterNumber')}.png';
 
+  HomePage({super.key});
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
-        body: Center(
-          child: Text('Home Page'),
-        ),
-       bottomNavigationBar: BottomAppBar(
-         child: Row(
-           mainAxisAlignment: MainAxisAlignment.spaceAround,
-           children: [
-             IconButton(
-               icon: Icon(Icons.book_outlined),
-               onPressed: () {
-                 GoRouter.of(context).go('/diary');
-               },
-             ),
-              IconButton(
-                icon: Icon(Icons.lightbulb_outline),
-                onPressed: () {
-                  // GoRouter.of(context).go('/home');
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.healing_outlined),
-                onPressed: () {
-                  // GoRouter.of(context).go('/home');
-                },
-              ),
-           ],
-         )
-       ),
-      );
+    return Center(
+      child: SizedBox(
+          width: 300, child: Image.asset('lib/assets/images/$monsterAsset')),
+    );
   }
 }

@@ -7,35 +7,8 @@ class DiaryPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    return Center(
         child: Text('Diary Page'),
-      ),
-      bottomNavigationBar: BottomAppBar(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: Icon(Icons.book_outlined),
-                onPressed: () {
-                  // GoRouter.of(context).go('/home');
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.lightbulb_outline),
-                onPressed: () {
-                  // GoRouter.of(context).go('/home');
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.healing_outlined),
-                onPressed: () {
-                  // GoRouter.of(context).go('/home');
-                },
-              ),
-            ],
-          )
-      ),
-    );
+      );
   }
 }

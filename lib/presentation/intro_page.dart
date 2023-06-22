@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:zenzone/application/locator.dart';
 
 class IntroPage extends StatelessWidget {
-  const IntroPage({super.key});
+  //const IntroPage({super.key});
 
   static const List<String> imageList = [
     'lib/assets/images/monster_h.png',
@@ -13,6 +14,7 @@ class IntroPage extends StatelessWidget {
     'lib/assets/images/monster_hhhh.png',
   ];
 
+  int current = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class IntroPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 primary:
-                const Color.fromRGBO(222, 184, 117, 0), // Set button color
+                    const Color.fromRGBO(222, 184, 117, 0), // Set button color
               ),
               child: const Text(
                 'Skip',
@@ -85,7 +87,8 @@ class IntroPage extends StatelessWidget {
                       return Container(
                         margin: const EdgeInsets.all(5.0),
                         child: ClipRRect(
-                          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0)),
                           child: Image.asset(
                             imageUrl,
                             fit: BoxFit.cover,
@@ -102,12 +105,27 @@ class IntroPage extends StatelessWidget {
                       enableInfiniteScroll: true,
                       scrollDirection: Axis.horizontal,
                       onPageChanged: (index, reason) {
-                        // set State(() {
-                        //   _current = index;
-                        // });
+                        current = index;
                       },
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        backgroundColor: const Color.fromRGBO(222, 184, 117, 1),
+                      ),
+                      onPressed: () {
+                            locator.get<GetStorage>().write('monsterNumber', current);
+                            locator.get<GetStorage>().write('isIntroDone', 'true');
+                            context.go('/home');
+                          },
+                      child: const Text(
+                        'Select',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      )),
                 ],
               ),
             ),
