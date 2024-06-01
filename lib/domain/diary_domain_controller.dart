@@ -12,11 +12,12 @@ class DiaryDomainController {
   }
 
   Future<void> saveDiaryEntry(String date, String content, String emotion) async {
-    final diary = await DiaryRepo.loadDiary();
-    diary.removeWhere((entry) => entry.date == date);
+    final oldDiary = await DiaryRepo.loadDiary();
+    oldDiary.removeWhere((entry) => entry.date == date);
     final diaryEntryToSave = DiaryEntry(
         emotion: emotion, content: content, date: date);
-    diary.add(diaryEntryToSave);
-    await DiaryRepo.saveDiary(diary);
+    oldDiary.add(diaryEntryToSave);
+    diary = oldDiary;
+    await DiaryRepo.saveDiary(oldDiary);
   }
 }

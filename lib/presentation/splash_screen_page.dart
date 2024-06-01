@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zenzone/application/locator.dart';
+import 'package:zenzone/application/getter.dart';
 import 'dart:io' show Platform;
 
 class SplashScreenPage extends StatefulWidget {
@@ -23,7 +23,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     await Future.delayed(const Duration(seconds: 7));
 
     if (FirebaseAuth.instance.currentUser != null) {
-      if (locator.get<GetStorage>().read('isIntroDone') == 'true')
+      if (getter.get<GetStorage>().read('isIntroDone') == 'true')
         context.go('/home');
       else
         context.go('/intro');

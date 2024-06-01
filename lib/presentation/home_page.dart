@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:zenzone/domain/quotes_controller.dart';
 
-import '../application/locator.dart';
+import '../application/getter.dart';
 
 class HomePage extends StatelessWidget {
   String monsterAsset =
-      'm${1 + locator.get<GetStorage>().read('monsterNumber')}.png';
+      'm${1 + getter.get<GetStorage>().read('monsterNumber')}.png';
 
   HomePage({super.key});
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 90),
+        SizedBox(height: 50),
         Align(
           alignment: Alignment.centerRight,
           child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
+            width: MediaQuery.of(context).size.width * 0.9,
             child: Stack(
               children: <Widget> [
                 Container(
@@ -27,14 +27,14 @@ class HomePage extends StatelessWidget {
                 Container(
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 83,),
+                    padding: const EdgeInsets.only(top: 90, left: 6.0, right: 0),
                     child: SizedBox(
                       width: 300,
-                      height: 50,
+                      height: 100,
                       child: Text(
                         QuotesController.getRandomQuote(),
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 22,
                           fontFamily: 'BraahOne',
                           color: Colors.black54,
                           // Set text color
@@ -48,22 +48,6 @@ class HomePage extends StatelessWidget {
           ),
         ),
 
-        // Align(
-        //     alignment: Alignment.centerRight,
-        //     child: SizedBox(
-        //       height: 100,
-        //       width: MediaQuery.of(context).size.width * 0.7,
-        //       child: Text(
-        //         QuotesController.getRandomQuote(),
-        //         style: const TextStyle(
-        //           fontSize: 20,
-        //           fontFamily: 'BraahOne',
-        //           color: Colors.black54,
-        //           // Set text color
-        //         ),
-        //       ),
-        //     )),
-        SizedBox(height: 90),
         Center(
           child: Align(
             alignment: Alignment.centerLeft,
