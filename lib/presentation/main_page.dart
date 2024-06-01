@@ -25,6 +25,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.blueGrey[100],
       body: Pages[selectedPageIndex!],
       bottomNavigationBar: BottomAppBar(

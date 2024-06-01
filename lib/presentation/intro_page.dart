@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
-import 'package:zenzone/application/locator.dart';
+import 'package:zenzone/application/getter.dart';
 
 class IntroPage extends StatelessWidget {
   //const IntroPage({super.key});
@@ -75,8 +75,8 @@ class IntroPage extends StatelessWidget {
                         backgroundColor: const Color.fromRGBO(222, 184, 117, 1),
                       ),
                       onPressed: () {
-                            locator.get<GetStorage>().write('monsterNumber', current);
-                            locator.get<GetStorage>().write('isIntroDone', 'true');
+                            getter.get<GetStorage>().write('monsterNumber', current);
+                            getter.get<GetStorage>().write('isIntroDone', 'true');
                             context.go('/home');
                           },
                       child: const Text(

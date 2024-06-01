@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:go_router/go_router.dart';
-import 'locator.dart';
+import 'getter.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -21,10 +21,10 @@ class AuthService{
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
-        locator<GetStorage>().write('userIsLoggedIn', false);
+        getter<GetStorage>().write('userIsLoggedIn', false);
       } else {
         print('User is signed in!');
-        locator<GetStorage>().write('userIsLoggedIn', true);
+        getter<GetStorage>().write('userIsLoggedIn', true);
       }
     });
   }
