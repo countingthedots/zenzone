@@ -25,12 +25,12 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 248, 241, 229),
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.blueGrey[100],
       body: Pages[selectedPageIndex!],
       bottomNavigationBar: BottomAppBar(
         height: 80,
-          color: Colors.blueGrey[300],
+          color: Color.fromARGB(255, 229, 197, 141),
           child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
