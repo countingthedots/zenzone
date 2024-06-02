@@ -11,52 +11,79 @@ class HomePage extends StatelessWidget {
   HomePage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 50),
-        Align(
-          alignment: Alignment.centerRight,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.9,
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('lib/assets/images/bg.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Column(
+        children: [
+          SizedBox(height: 50),
+          Align(
+            alignment: Alignment.centerRight,
             child: Stack(
               children: <Widget> [
                 Container(
-                  alignment: Alignment.center,
-                  child: Image.asset('lib/assets/images/cloud.png', fit: BoxFit.cover),
+                  alignment: Alignment.topRight,
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 50, left: 6.0, right: 0),
+                    child: SizedBox(
+                      width: 300,
+                      height: 100,
+                      child: Text(
+                        'ADVICE OF THE DAY',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontFamily: 'BraahOne',
+                          color: Color.fromARGB(255, 	207, 177, 125),
+                          // Set text color
+                        ),
+                      ),
+                    ),
+                  
+                  ),
                 ),
                 Container(
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 90, left: 6.0, right: 0),
+                    padding: const EdgeInsets.only(top: 260, left: 0.0, right: 40),
                     child: SizedBox(
-                      width: 300,
+                      width: MediaQuery.of(context).size.width * 0.8,
                       height: 100,
                       child: Text(
                         QuotesController.getRandomQuote(),
                         style: const TextStyle(
                           fontSize: 22,
                           fontFamily: 'BraahOne',
-                          color: Colors.black54,
+                          color: Color.fromARGB(255, 	207, 177, 125),
                           // Set text color
                         ),
                       ),
                     ),
                   ),
                 ),
+                Container(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.4, left: 0.0, right: 0.0),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          child: Image.asset('lib/assets/images/$monsterAsset')),
+                    ),
+                  ),
+                ),
              ],
                 ),
           ),
-        ),
-
-        Center(
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: SizedBox(
-                width: 300,
-                child: Image.asset('lib/assets/images/$monsterAsset')),
-          ),
-        ),
-      ],
+    
+          
+        ],
+      ),
     );
   }
 }

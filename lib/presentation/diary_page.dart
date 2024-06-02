@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:go_router/go_router.dart';
 import 'package:zenzone/application/getter.dart';
 import 'package:zenzone/domain/models/diary_entry.dart';
 import 'package:intl/intl.dart';
+import 'package:zenzone/presentation/diary_page/emotion_selector.dart';
 import '../domain/diary_domain_controller.dart';
+
+
 
 class DiaryPage extends StatefulWidget {
   const DiaryPage({Key? key}) : super(key: key);
+
 
   @override
   State<DiaryPage> createState() => _DiaryPageState();
@@ -16,10 +18,12 @@ class DiaryPage extends StatefulWidget {
 class _DiaryPageState extends State<DiaryPage> {
   String date = DateFormat('dd.MM.yyyy').format(DateTime.now());
   final TextEditingController _controller = TextEditingController();
-  String selectedEmotion = '';
   bool isCalendarVisible = false;
   bool wasDataCollected = false;
   bool newDateSet = false;
+  String selectedEmotion = '';
+  
+  late EmotionSelector emotionSelector;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -73,132 +77,32 @@ class _DiaryPageState extends State<DiaryPage> {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
                   return const Center(child: CircularProgressIndicator());
-                  break;
                 default:
                   if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
                     if (!wasDataCollected) {
                       _controller.text = snapshot.data!.content;
-                      selectedEmotion = snapshot.data!.emotion;
+                      emotionSelector = EmotionSelector(
+                        onEmotionSelected: (emotion) {
+                            selectedEmotion = emotion;
+                        },
+                      );
                       wasDataCollected = true;
                     } else {
                       if (newDateSet) {
                         _controller.text = snapshot.data!.content;
-                        selectedEmotion = snapshot.data!.emotion;
+                        emotionSelector = EmotionSelector(
+                          onEmotionSelected: (emotion) {
+                              selectedEmotion = emotion;
+                          },
+                        );
                         newDateSet = false;
                       }
                     }
                     return Column(
                       children: [
-                        Row(
-                          children: [
-                            const SizedBox(width: 25),
-                            GestureDetector(
-                              child: Container(
-                                width: selectedEmotion == 'happy'
-                                    ? 115
-                                    : 100, // Increase width when selected
-                                height: (selectedEmotion) == 'happy'
-                                    ? 115
-                                    : 100, // Increase height when selected
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                        'lib/assets/images/delighted_emotion.png'),
-                                    //fit: BoxFit.fill,
-                                  ),
-                                  border: selectedEmotion == 'happy'
-                                      ? Border.all(
-                                          color: Colors
-                                              .white54, // Outline color when selected
-                                          width: 7,
-                                          // Outline width when selected
-                                        )
-                                      : null, // No outline when not selected
-                                ),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  if (selectedEmotion != 'happy')
-                                    selectedEmotion = 'happy';
-                                  else
-                                    selectedEmotion = '';
-                                  // Set selectedEmotion when selected, empty string otherwise
-                                });
-                              },
-                            ),
-                            const SizedBox(width: 20),
-                            GestureDetector(
-                              child: Container(
-                                width: selectedEmotion == 'sad'
-                                    ? 115
-                                    : 100, // Increase width when selected
-                                height: selectedEmotion == 'sad'
-                                    ? 115
-                                    : 100, // Increase height when selected
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                        'lib/assets/images/sad_emotion.png'),
-                                    fit: BoxFit.fill,
-                                  ),
-                                  border: selectedEmotion == 'sad'
-                                      ? Border.all(
-                                          color: Colors
-                                              .white54, // Outline color when selected
-                                          width: 7,
-                                          // Outline width when selected
-                                        )
-                                      : null, // No outline when not selected
-                                ),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  selectedEmotion = selectedEmotion == 'sad'
-                                      ? ''
-                                      : 'sad'; // Set selectedEmotion when selected, null otherwise
-                                });
-                              },
-                            ),
-                            SizedBox(width: 20),
-                            GestureDetector(
-                              child: Container(
-                                width: selectedEmotion == 'ok'
-                                    ? 115
-                                    : 100, // Increase width when selected
-                                height: selectedEmotion == 'ok'
-                                    ? 115
-                                    : 100, // Increase height when selected
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        'lib/assets/images/ok_emotion.png'),
-                                    fit: BoxFit.fill,
-                                  ),
-                                  border: selectedEmotion == 'ok'
-                                      ? Border.all(
-                                          color: Colors
-                                              .white54, // Outline color when selected
-                                          width:
-                                              7, // Outline width when selected
-                                        )
-                                      : null, // No outline when not selected
-                                ),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  selectedEmotion = (selectedEmotion == 'ok'
-                                      ? ''
-                                      : 'ok'); // Set selectedEmotion when selected, null otherwise
-                                });
-                              },
-                            ),
-                          ],
-                        ),
+                        emotionSelector,
                         const SizedBox(
                           height: 50,
                         ),
