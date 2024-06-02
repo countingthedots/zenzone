@@ -43,7 +43,7 @@ class _ExercisePageState extends State<ExercisePage> {
                       context.go('/home');
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.blueGrey[300],
+                      backgroundColor: Colors.blueGrey[300],
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -60,10 +60,10 @@ class _ExercisePageState extends State<ExercisePage> {
             const Center(
               child: Text('FIND',
                   style: TextStyle(
-                      fontSize: 40,
-                      fontFamily: 'BraahOne',
-                      color: Colors.blueGrey,)
-              ),
+                    fontSize: 40,
+                    fontFamily: 'BraahOne',
+                    color: Colors.blueGrey,
+                  )),
             ),
             Center(
               child: SizedBox(
