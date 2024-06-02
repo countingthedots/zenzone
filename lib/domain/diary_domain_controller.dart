@@ -11,6 +11,11 @@ class DiaryDomainController {
     return diaryEntry;
   }
 
+  Future<List<DiaryEntry>> getDiary() async {
+    diary ??= await DiaryRepo.loadDiary();
+    return diary!;
+  }
+
   Future<void> saveDiaryEntry(String date, String content, String emotion) async {
     final oldDiary = await DiaryRepo.loadDiary();
     oldDiary.removeWhere((entry) => entry.date == date);
