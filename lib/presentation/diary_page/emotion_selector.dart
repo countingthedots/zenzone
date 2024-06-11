@@ -13,121 +13,129 @@ class _EmotionSelectorState extends State<EmotionSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-                          children: [
-                            const SizedBox(width: 25),
-                            GestureDetector(
-                              child: Container(
-                                width: selectedEmotion == 'happy'
-                                    ? 115
-                                    : 100, // Increase width when selected
-                                height: (selectedEmotion) == 'happy'
-                                    ? 115
-                                    : 100, // Increase height when selected
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                        'lib/assets/images/delighted_emotion.png'),
-                                    //fit: BoxFit.fill,
+    return Container(
+      height: 115,
+      child: Row(
+                            children: [
+                              const SizedBox(width: 25),
+                              GestureDetector(
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 200),
+                                  curve: Curves.easeInOut,
+                                  width: selectedEmotion == 'happy'
+                                      ? 115
+                                      : 100, // Increase width when selected
+                                  height: (selectedEmotion) == 'happy'
+                                      ? 115
+                                      : 100, // Increase height when selected
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: const DecorationImage(
+                                      image: AssetImage(
+                                          'lib/assets/images/delighted_emotion.png'),
+                                      //fit: BoxFit.fill,
+                                    ),
+                                    border: selectedEmotion == 'happy'
+                                        ? Border.all(
+                                            color: Colors
+                                                .white54, // Outline color when selected
+                                            width: 7,
+                                            // Outline width when selected
+                                          )
+                                        : null, // No outline when not selected
                                   ),
-                                  border: selectedEmotion == 'happy'
-                                      ? Border.all(
-                                          color: Colors
-                                              .white54, // Outline color when selected
-                                          width: 7,
-                                          // Outline width when selected
-                                        )
-                                      : null, // No outline when not selected
                                 ),
+                                onTap: () {
+                                  setState(() {
+                                    selectedEmotion = selectedEmotion == 'happy'
+                                        ? ''
+                                        : 'happy';
+                                  });
+                                  widget.onEmotionSelected(selectedEmotion);
+                                },
                               ),
-                              onTap: () {
-                                setState(() {
-                                  if (selectedEmotion != 'happy')
-                                    selectedEmotion = 'happy';
-                                  else
-                                    selectedEmotion = '';
-                                });
-                                widget.onEmotionSelected(selectedEmotion);
-                              },
-                            ),
-                            const SizedBox(width: 20),
-                            GestureDetector(
-                              child: Container(
-                                width: selectedEmotion == 'sad'
-                                    ? 115
-                                    : 100, // Increase width when selected
-                                height: selectedEmotion == 'sad'
-                                    ? 115
-                                    : 100, // Increase height when selected
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                        'lib/assets/images/sad_emotion.png'),
-                                    fit: BoxFit.fill,
+                              const SizedBox(width: 20),
+                              GestureDetector(
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 200),
+                                  curve: Curves.easeInOut,
+                                  width: selectedEmotion == 'sad'
+                                      ? 115
+                                      : 100, // Increase width when selected
+                                  height: selectedEmotion == 'sad'
+                                      ? 115
+                                      : 100, // Increase height when selected
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: const DecorationImage(
+                                      image: AssetImage(
+                                          'lib/assets/images/sad_emotion.png'),
+                                      fit: BoxFit.fill,
+                                    ),
+                                    border: selectedEmotion == 'sad'
+                                        ? Border.all(
+                                            color: Colors
+                                                .white54, // Outline color when selected
+                                            width: 7,
+                                            // Outline width when selected
+                                          )
+                                        : null, // No outline when not selected
                                   ),
-                                  border: selectedEmotion == 'sad'
-                                      ? Border.all(
-                                          color: Colors
-                                              .white54, // Outline color when selected
-                                          width: 7,
-                                          // Outline width when selected
-                                        )
-                                      : null, // No outline when not selected
                                 ),
+                                onTap: () {
+                                  setState(() {
+                                    selectedEmotion = selectedEmotion == 'sad'
+                                        ? ''
+                                        : 'sad'; // Set selectedEmotion when selected, null otherwise
+    
+                                    
+    
+                                  });
+                                  widget.onEmotionSelected(selectedEmotion);
+                                },
                               ),
-                              onTap: () {
-                                setState(() {
-                                  selectedEmotion = selectedEmotion == 'sad'
-                                      ? ''
-                                      : 'sad'; // Set selectedEmotion when selected, null otherwise
-
-                                  
-
-                                });
-                                widget.onEmotionSelected(selectedEmotion);
-                              },
-                            ),
-                            const SizedBox(width: 20),
-                            GestureDetector(
-                              child: Container(
-                                width: selectedEmotion == 'ok'
-                                    ? 115
-                                    : 100, // Increase width when selected
-                                height: selectedEmotion == 'ok'
-                                    ? 115
-                                    : 100, // Increase height when selected
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                        'lib/assets/images/ok_emotion.png'),
-                                    fit: BoxFit.fill,
+                              const SizedBox(width: 20),
+                              GestureDetector(
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 200),
+                                  curve: Curves.easeInOut,
+                                  width: selectedEmotion == 'ok'
+                                      ? 115
+                                      : 100, // Increase width when selected
+                                  height: selectedEmotion == 'ok'
+                                      ? 115
+                                      : 100, // Increase height when selected
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: const DecorationImage(
+                                      image: AssetImage(
+                                          'lib/assets/images/ok_emotion.png'),
+                                      fit: BoxFit.fill,
+                                    ),
+                                    border: selectedEmotion == 'ok'
+                                        ? Border.all(
+                                            color: Colors
+                                                .white54, // Outline color when selected
+                                            width:
+                                                7, // Outline width when selected
+                                          )
+                                        : null, // No outline when not selected
                                   ),
-                                  border: selectedEmotion == 'ok'
-                                      ? Border.all(
-                                          color: Colors
-                                              .white54, // Outline color when selected
-                                          width:
-                                              7, // Outline width when selected
-                                        )
-                                      : null, // No outline when not selected
                                 ),
+                                onTap: () {
+                                  setState(() {
+                                    selectedEmotion = (selectedEmotion == 'ok'
+                                        ? ''
+                                        : 'ok'); // Set selectedEmotion when selected, null otherwise
+    
+                                    
+    
+                                  });
+                                  widget.onEmotionSelected(selectedEmotion);
+                                },
                               ),
-                              onTap: () {
-                                setState(() {
-                                  selectedEmotion = (selectedEmotion == 'ok'
-                                      ? ''
-                                      : 'ok'); // Set selectedEmotion when selected, null otherwise
-
-                                  
-
-                                });
-                                widget.onEmotionSelected(selectedEmotion);
-                              },
-                            ),
-                          ],
-                        );
+                            ],
+                          ),
+    );
   }
 }
