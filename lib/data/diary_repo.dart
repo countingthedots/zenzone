@@ -22,9 +22,19 @@ class DiaryRepo{
       }
     }
     else{
-      return diary
-          .map<DiaryEntry>((json) => DiaryEntry.fromJson(json))
-          .toList();
+      if (diary is List) {
+      return diary.map<DiaryEntry>((diaryEntry) {
+        if (diaryEntry is Map<String, dynamic>) {
+          return DiaryEntry.fromJson(diaryEntry);
+        } else if (diaryEntry is DiaryEntry) {
+          return diaryEntry;
+        } else {
+          throw Exception('Unexpected diary entry type');
+        }
+      }).toList();
+    } else {
+      return [];
+    }
     }
   }
 

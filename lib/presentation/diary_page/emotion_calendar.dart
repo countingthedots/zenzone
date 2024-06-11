@@ -7,8 +7,9 @@ import 'package:zenzone/domain/diary_domain_controller.dart';
 import 'package:zenzone/domain/models/diary_entry.dart';
 
 class EmotionCalendar extends StatefulWidget {
-  EmotionCalendar({required this.diary, super.key});
-  List<DiaryEntry> diary;
+  EmotionCalendar({required this.diary, required this.onDaySelected, super.key});
+  final List<DiaryEntry> diary;
+  final Function(String) onDaySelected;
   @override
   State<EmotionCalendar> createState() => _EmotionCalendarState();
 }
@@ -20,9 +21,9 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
   bool selectedcurrentyear = false;
   late List<DiaryEntry> diary;
   final emotionToAsset = <String, String>{
-    "happy": "lib/assets/images/delighted_emotion.png",
-    "sad": "lib/assets/images/sad_emotion.png",
-    "ok": "lib/assets/images/ok_emotion.png",
+    "happy": 'lib/assets/images/delighted_emotion.png',
+    "sad": 'lib/assets/images/sad_emotion.png',
+    "ok": 'lib/assets/images/ok_emotion.png',
     "none": "lib/assets/images/no_emotion.png",
   };
   @override
@@ -33,27 +34,50 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildHeader(),
-        _buildWeeks(),
-        Expanded(
-          child: PageView.builder(
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _currentMonth = DateTime(_currentMonth.year, index + 1, 1);
-              });
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.8,
+      child: Column(
+        children: [
+          Spacer(),
+          const Text('Emotion Calendar', style: TextStyle(fontSize: 36, fontFamily: 'BraahOne', color: Color.fromARGB(255, 	126, 109, 76))),
+          Spacer(),
+          _buildWeeks(),
+          GestureDetector(
+            onPanEnd: (DragEndDetails details) {
+              if (details.velocity.pixelsPerSecond.dx > 0) {
+                _pageController.previousPage(
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              }
+              if(details.velocity.pixelsPerSecond.dx < 0){
+                _pageController.nextPage(
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              }
             },
-            itemCount: 12 * 10, // Show 10 years, adjust this count as needed
-            itemBuilder: (context, pageIndex) {
-              DateTime month =
-                  DateTime(_currentMonth.year, (pageIndex % 12) + 1, 1);
-              return buildCalendar(month);
-            },
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: PageView.builder(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentMonth = DateTime(_currentMonth.year, index + 1, 1);
+                  });
+                },
+                itemCount: 12 * 10, // Show 10 years, adjust this count as needed
+                itemBuilder: (context, pageIndex) {
+                  DateTime month =
+                      DateTime(_currentMonth.year, (pageIndex % 12) + 1, 1);
+                  return buildCalendar(month);
+                },
+              ),
+            ),
           ),
-        ),
-      ],
+          _buildHeader(),
+        ],
+      ),
     );
   }
 
@@ -81,7 +105,7 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
           // Displays the name of the current month
           Text(
             '${DateFormat('MMMM').format(_currentMonth)}',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 22, fontFamily: 'BraahOne'),
           ),
           DropdownButton<int>(
             // Dropdown for selecting a year
@@ -171,7 +195,7 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
       padding: EdgeInsets.zero,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 7,
-        childAspectRatio: 0.4,
+        childAspectRatio: 0.7,
       ),
       // Calculating the total number of cells required in the grid
       itemCount: daysInMonth + weekdayOfFirstDay - 1,
@@ -181,14 +205,6 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
           int previousMonthDay =
               daysInPreviousMonth - (weekdayOfFirstDay - index) + 2;
           return Container(
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide.none,
-                left: BorderSide(width: 1.0, color: Colors.grey),
-                right: BorderSide(width: 1.0, color: Colors.grey),
-                bottom: BorderSide(width: 1.0, color: Colors.grey),
-              ),
-            ),
             alignment: Alignment.center,
             child: Text(
               previousMonthDay.toString(),
@@ -208,30 +224,30 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
             ),
           );
           String day = date.day.toString();
-
+          print(emotionToAsset[entry.emotion]!);
           return InkWell(
             onTap: () {
-              context.go("/new-entry");
+                  widget.onDaySelected(DateFormat('dd.MM.yyyy').format(date));
             },
             child: Container(
+              height: 20,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Expanded(
-                    flex: 0,
-                    child: SizedBox(
-                      child: Image.asset(
-                        emotionToAsset[entry.emotion] ??
-                            "lib/assets/images/no_emotion.png",
-                        width: 40,
-                        height: 40,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Center(
+                  Container(
+                      width: 40,
+                      height: 40,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        emotionToAsset[entry.emotion]!
+                                    )
+                                    //fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                  Center(
                       child: Text(
                         day,
                         style: const TextStyle(
@@ -239,7 +255,6 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -248,8 +263,4 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
       },
     );
   }
-  // Write a Widget code from here
-  // Widget _buildHeader() {--}
-  //  Widget _buildWeeks() {--}
-  //  Widget _buildCalendar() {--}
 }

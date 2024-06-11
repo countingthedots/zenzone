@@ -12,7 +12,7 @@ class DiaryDomainController {
   }
 
   Future<List<DiaryEntry>> getDiary() async {
-    diary ??= await DiaryRepo.loadDiary();
+    diary = await DiaryRepo.loadDiary();
     return diary!;
   }
 
