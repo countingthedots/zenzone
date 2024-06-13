@@ -49,12 +49,12 @@ class HomePage extends StatelessWidget {
                 Container(
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 260, left: 0.0, right: 40),
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.29, left: 0.0, right: 40),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
                       height: 100,
                       child: Text(
-                        QuotesController.getRandomQuote(),
+                        QuotesController.todaysQuote,
                         style: const TextStyle(
                           fontSize: 22,
                           fontFamily: 'BraahOne',
@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
                 Container(
                   alignment: Alignment.bottomRight,
                   child: Padding(
-                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.4, left: 0.0, right: 0.0),
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.35, left: 0.0, right: 0.0),
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: SizedBox(

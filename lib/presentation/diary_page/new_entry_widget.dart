@@ -25,6 +25,7 @@ class _NewEntryWidgetState extends State<NewEntryWidget> {
   void initState() {
     super.initState();
     emotionSelector = EmotionSelector(
+      defaultEmotion: widget.entry.emotion,
       onEmotionSelected: (emotion) {
         selectedEmotion = emotion;
       },
@@ -42,7 +43,7 @@ Widget build(BuildContext context) {
       child: Column(
         children: [
           Spacer(flex: 2,),
-          const Text("Helloo!\nHow are you feeling now?",
+          const Text("Hello!\nHow are you feeling now?",
               style: TextStyle(
                   fontFamily: 'BraahOne',
                   fontSize: 24,

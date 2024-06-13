@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 
 class EmotionSelector extends StatefulWidget {
  final Function(String) onEmotionSelected;
-  EmotionSelector({Key? key, required this.onEmotionSelected}) : super(key: key);
+ final String defaultEmotion;
+  EmotionSelector({Key? key, required this.defaultEmotion, required this.onEmotionSelected}) : super(key: key);
 
   @override
   _EmotionSelectorState createState() => _EmotionSelectorState();
 }
 
 class _EmotionSelectorState extends State<EmotionSelector> {
- String selectedEmotion = '';
+ late String selectedEmotion;
+
+ @override
+  void initState() {
+   super.initState();
+   selectedEmotion = widget.defaultEmotion;
+   widget.onEmotionSelected(selectedEmotion);
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +25,7 @@ class _EmotionSelectorState extends State<EmotionSelector> {
       height: 115,
       child: Row(
                             children: [
-                              const SizedBox(width: 25),
+                             const Spacer(),
                               GestureDetector(
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 200),
@@ -54,7 +62,7 @@ class _EmotionSelectorState extends State<EmotionSelector> {
                                   widget.onEmotionSelected(selectedEmotion);
                                 },
                               ),
-                              const SizedBox(width: 20),
+                              const Spacer(),
                               GestureDetector(
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 200),
@@ -94,7 +102,7 @@ class _EmotionSelectorState extends State<EmotionSelector> {
                                   widget.onEmotionSelected(selectedEmotion);
                                 },
                               ),
-                              const SizedBox(width: 20),
+                              const Spacer(),
                               GestureDetector(
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 200),
@@ -134,6 +142,7 @@ class _EmotionSelectorState extends State<EmotionSelector> {
                                   widget.onEmotionSelected(selectedEmotion);
                                 },
                               ),
+                              const Spacer(),
                             ],
                           ),
     );

@@ -54,7 +54,7 @@ class GamePage extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Colors.blueGrey[300],
+                backgroundColor: Color.fromARGB(255, 229, 197, 141),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),

@@ -39,7 +39,7 @@ class DiaryRepo{
   }
 
   static Future<void> saveDiary(List<DiaryEntry> diary) async {
-
+    getter.get<GetStorage>().write('Diary', diary);
     if (FirebaseAuth.instance.currentUser != null) {
       final List<Map> mapDiary = [];
       for (DiaryEntry diaryEntry in diary) {
@@ -53,7 +53,7 @@ class DiaryRepo{
       };
       db.collection('diaries').doc(user.uid).set(diaryToSave);
     }
-    getter.get<GetStorage>().write('Diary', diary);
+    
     return;
   }
 }

@@ -21,7 +21,7 @@ class IntroPage extends StatelessWidget {
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 80.0),
+            padding: const EdgeInsets.only(top: 70.0),
             child: Align(
               alignment: Alignment.center,
               child: Column(
@@ -57,7 +57,7 @@ class IntroPage extends StatelessWidget {
                     options: CarouselOptions(
                       height: 350.0,
                       autoPlay: false,
-                      aspectRatio: 16 / 9,
+                      aspectRatio: 1 / 1,
                       enlargeCenterPage: true,
                       enableInfiniteScroll: true,
                       scrollDirection: Axis.horizontal,
@@ -67,22 +67,29 @@ class IntroPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        backgroundColor: const Color.fromRGBO(222, 184, 117, 1),
-                      ),
-                      onPressed: () {
-                            getter.get<GetStorage>().write('monsterNumber', current);
-                            getter.get<GetStorage>().write('isIntroDone', 'true');
-                            context.go('/home');
-                          },
-                      child: const Text(
-                        'Select',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      )),
+                 
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 	207, 177, 125),
+                                  minimumSize: Size(double.infinity, 50), // Set the minimum width and height
+                                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25), // Set the border radius
+                                  ),
+                                ),
+                                onPressed: () {
+                                   getter.get<GetStorage>().write('monsterNumber', current);
+                              getter.get<GetStorage>().write('isIntroDone', 'true');
+                              String? isIntroDone = getter.get<GetStorage>().read('isIntroDone');
+                              context.go('/home');
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text('Select', style: TextStyle(color: Colors.white60, fontSize: 24, fontFamily: 'BraahOne')),
+                                ),
+                    ),
+                  ),
                 ],
               ),
             ),

@@ -26,7 +26,7 @@ class _ExercisePageState extends State<ExercisePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[100],
+      backgroundColor: Color.fromARGB(255, 248, 241, 229),
       body: Center(
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,7 +43,7 @@ class _ExercisePageState extends State<ExercisePage> {
                       context.go('/home');
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueGrey[300],
+                      backgroundColor: Color.fromARGB(255, 229, 197, 141),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -54,15 +54,13 @@ class _ExercisePageState extends State<ExercisePage> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 150,
-            ),
+            const Spacer(),
             const Center(
               child: Text('FIND',
                   style: TextStyle(
                     fontSize: 40,
                     fontFamily: 'BraahOne',
-                    color: Colors.blueGrey,
+                    color: Color.fromARGB(235, 215, 156, 55),
                   )),
             ),
             Center(
@@ -79,7 +77,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         style: TextStyle(
                           fontFamily: 'BraahOne',
                           color: index == currentIndex
-                              ? Colors.black
+                              ? Color.fromARGB(235, 215, 156, 55)
                               : Colors.grey,
                           fontWeight: index == currentIndex
                               ? FontWeight.bold
@@ -95,11 +93,11 @@ class _ExercisePageState extends State<ExercisePage> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+           const Spacer(),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Colors.blueGrey[300],
+                backgroundColor: Color.fromARGB(255, 229, 197, 141),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -117,6 +115,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 style: TextStyle(fontSize: 24),
               ),
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
