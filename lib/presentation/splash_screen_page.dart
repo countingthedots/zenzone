@@ -23,7 +23,8 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     await Future.delayed(const Duration(seconds: 7));
 
     if (FirebaseAuth.instance.currentUser != null) {
-      if (getter.get<GetStorage>().read('isIntroDone') == 'true')
+      String? isIntroDone = getter.get<GetStorage>().read('isIntroDone');
+      if (isIntroDone == 'true')
         context.go('/home');
       else
         context.go('/intro');

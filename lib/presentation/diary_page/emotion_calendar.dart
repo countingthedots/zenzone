@@ -35,10 +35,10 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.8,
+      height: MediaQuery.of(context).size.height - 100,
       child: Column(
         children: [
-          Spacer(),
+          Spacer(flex: 2,),
           const Text('Emotion Calendar', style: TextStyle(fontSize: 36, fontFamily: 'BraahOne', color: Color.fromARGB(255, 	126, 109, 76))),
           Spacer(),
           _buildWeeks(),
@@ -58,7 +58,7 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
               }
             },
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.55,
               child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: (index) {

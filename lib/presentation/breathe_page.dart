@@ -13,30 +13,40 @@ class _BreathePageState extends State<BreathePage>
   AnimationController? _animationController;
   Animation<double>? _animation;
 
-  int timerDuration = 0; // Duration of the breathing exercise in seconds
   bool isBreathing = false; // Flag to track if the exercise is ongoing
   Timer? breathingTimer; // Timer for the breathing exercise
 
   List<int> durationOptions = [1, 3, 5, 7]; // Available duration options
-  int? selectedDuration; // Selected duration
+  Duration? selectedDuration; // Selected duration
+  Duration timeRemaining = Duration(seconds: 0); // Time remaining for the exercise;
 
   bool isExhale = false; // Flag to track inhale/exhale state
 
   @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 5),
-    );
-    _animationController!.repeat(reverse: true);
-    _animation = Tween(begin: 0.3, end: 1.4).animate(_animationController!)
-      ..addListener(() {
-        setState(() {});
-      });
+void initState() {
+  super.initState();
+  _animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 5),
+  );
 
-    selectedDuration = durationOptions[0]; // Set the initial selected duration
-  }
+  // Initialize the _animation with a Tween
+  _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController!)
+    ..addListener(() {
+      setState(() {}); // This will trigger a rebuild whenever the animation value changes
+    })
+    ..addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _animationController!.reverse();
+        setState(() => isExhale = true);
+      } else if (status == AnimationStatus.dismissed) {
+        _animationController!.forward();
+        setState(() => isExhale = false);
+      }
+    });
+
+  selectedDuration = Duration(minutes: durationOptions[0]); // Set the initial selected duration
+}
 
   @override
   void dispose() {
@@ -58,7 +68,7 @@ class _BreathePageState extends State<BreathePage>
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0, right: 100.0),
+                      padding: const EdgeInsets.only(left: 20.0, right: 70),
                       child: Container(
                         height: 50,
                         width: 10,
@@ -73,7 +83,7 @@ class _BreathePageState extends State<BreathePage>
                         child: Padding(
                           padding: const EdgeInsets.only(left: 4.0),
                           child: Text(
-                            timerDuration.toString(),
+                            timeRemaining!.inSeconds.toString(),
                             style: const TextStyle(
                               color: Colors.black45,
                               fontSize: 36,
@@ -104,10 +114,10 @@ class _BreathePageState extends State<BreathePage>
                           Padding(
                             padding: const EdgeInsets.only(right: 30.0),
                             child: DropdownButton<int>(
-                              value: selectedDuration,
+                              value: selectedDuration!.inMinutes,
                               onChanged: (value) {
                                 setState(() {
-                                  selectedDuration = value;
+                                  selectedDuration = Duration(minutes: value!);
                                 });
                               },
                               items: durationOptions.map((duration) {
@@ -141,12 +151,12 @@ class _BreathePageState extends State<BreathePage>
                   height: 200,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.blueGrey[300],
+                    color: Color.fromRGBO(151, 209, 215, 1),
                     boxShadow: isBreathing
                         ? [
                       BoxShadow(
-                        color: Colors.blueGrey,
-                        blurRadius: 30 * scale,
+                        color: Color.fromRGBO(151, 209, 215, 1),
+                        blurRadius: 30,
                         spreadRadius: 15 * scale,
                       ),
                     ]
@@ -158,7 +168,7 @@ class _BreathePageState extends State<BreathePage>
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: Text(
-                          timerDuration > 0
+                          timeRemaining!.inSeconds > 0
                               ? isExhale
                               ? 'Exhale'
                               : 'Inhale'
@@ -182,43 +192,36 @@ class _BreathePageState extends State<BreathePage>
   void startBreathing() {
     setState(() {
       isBreathing = true;
-      timerDuration = selectedDuration! * 60; // Convert duration to seconds
-      isExhale = timerDuration > 0
-          ? false
-          : true; // Set initial state to inhale if timer duration is greater than zero
+      timeRemaining = selectedDuration!; // Convert duration to seconds
     });
-
-    // Start the breathing exercise
-    int exhaleInterval = 5; // Exhale interval in seconds
-    int inhaleInterval = 5; // Inhale interval in seconds
-
-    int currentInterval = isExhale ? exhaleInterval : inhaleInterval;
-
-    breathingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (timerDuration <= 0) {
-        stopBreathing();
-        return;
-      }
-
-      setState(() {
-        timerDuration--;
-
-        // Toggle inhale/exhale state based on current interval
-        if (timerDuration % currentInterval == 0) {
-          isExhale = !isExhale;
-          currentInterval = isExhale ? exhaleInterval : inhaleInterval;
-        }
-      });
-    });
+    _animationController!.forward();
+    startTimer();
   }
 
   void stopBreathing() {
     setState(() {
+      _animationController!.reset();
+      _animationController!.stop();
       isBreathing = false;
-      timerDuration = 0;
     });
-
     // Cancel the breathing exercise timer
+    timeRemaining = Duration(seconds: 0);
     breathingTimer?.cancel();
+  }
+
+  void startTimer() {
+    timeRemaining = selectedDuration!;
+    breathingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (timeRemaining!.inSeconds <= 0) {
+        // Countdown is finished
+        breathingTimer?.cancel();
+        stopBreathing();
+      } else {
+        // Update the countdown value and decrement by 1 second
+        setState(() {
+          timeRemaining = timeRemaining - Duration(seconds: 1);
+        });
+      }
+    });
   }
 }
