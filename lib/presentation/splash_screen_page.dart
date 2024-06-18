@@ -40,7 +40,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
-      const Color.fromRGBO(189, 204, 173, 1), // Sage green background color
+      Color.fromARGB(255, 248, 241, 229), // Sage green background color
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -53,7 +53,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                   .headlineMedium
                   ?.copyWith(
                 fontFamily: 'BraahOne',
-                color: const Color.fromRGBO(187, 173, 204, 1.0),
+                color: const Color.fromRGBO(62, 140, 175, 1.0),
               ),
             ),
             _textLiquidFillAnimation()
