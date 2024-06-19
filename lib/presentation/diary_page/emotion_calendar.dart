@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:zenzone/application/getter.dart';
 import 'package:zenzone/domain/diary_domain_controller.dart';
 import 'package:zenzone/domain/models/diary_entry.dart';
@@ -10,6 +12,7 @@ class EmotionCalendar extends StatefulWidget {
   EmotionCalendar({required this.diary, required this.onDaySelected, super.key});
   final List<DiaryEntry> diary;
   final Function(String) onDaySelected;
+  
   @override
   State<EmotionCalendar> createState() => _EmotionCalendarState();
 }
@@ -20,6 +23,8 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
   DateTime _currentMonth = DateTime.now();
   bool selectedcurrentyear = false;
   late List<DiaryEntry> diary;
+  final GlobalKey _one = GlobalKey();
+  final GlobalKey _two = GlobalKey();
   final emotionToAsset = <String, String>{
     "happy": 'lib/assets/images/delighted_emotion.png',
     "sad": 'lib/assets/images/sad_emotion.png',
@@ -28,6 +33,12 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
   };
   @override
   void initState() {
+    if(getter.get<GetStorage>().read('calendarTutorialShown') != 'true'){
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+      ShowCaseWidget.of(context).startShowCase([_one, _two])
+    );
+    getter.get<GetStorage>().write('calendarTutorialShown', 'true');
+  }
     diary = widget.diary;
     super.initState();
   }
@@ -42,36 +53,40 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
           const Text('Emotion Calendar', style: TextStyle(fontSize: 36, fontFamily: 'BraahOne', color: Color.fromARGB(255, 	126, 109, 76))),
           Spacer(),
           _buildWeeks(),
-          GestureDetector(
-            onPanEnd: (DragEndDetails details) {
-              if (details.velocity.pixelsPerSecond.dx > 0) {
-                _pageController.previousPage(
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                );
-              }
-              if(details.velocity.pixelsPerSecond.dx < 0){
-                _pageController.nextPage(
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                );
-              }
-            },
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.55,
-              child: PageView.builder(
-                controller: _pageController,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentMonth = DateTime(_currentMonth.year, index + 1, 1);
-                  });
-                },
-                itemCount: 12 * 10, // Show 10 years, adjust this count as needed
-                itemBuilder: (context, pageIndex) {
-                  DateTime month =
-                      DateTime(_currentMonth.year, (pageIndex % 12) + 1, 1);
-                  return buildCalendar(month);
-                },
+          Showcase(
+            key: _one,
+            description: 'With this calendar you can see your mood for each day',
+            child: GestureDetector(
+              onPanEnd: (DragEndDetails details) {
+                if (details.velocity.pixelsPerSecond.dx > 0) {
+                  _pageController.previousPage(
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                }
+                if(details.velocity.pixelsPerSecond.dx < 0){
+                  _pageController.nextPage(
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                }
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.55,
+                child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentMonth = DateTime(_currentMonth.year, index + 1, 1);
+                    });
+                  },
+                  itemCount: 12 * 10, // Show 10 years, adjust this count as needed
+                  itemBuilder: (context, pageIndex) {
+                    DateTime month =
+                        DateTime(_currentMonth.year, (pageIndex % 12) + 1, 1);
+                    return buildCalendar(month);
+                  },
+                ),
               ),
             ),
           ),
@@ -225,6 +240,46 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
           );
           String day = date.day.toString();
           print(emotionToAsset[entry.emotion]!);
+          if(date.day == 1)
+          return Showcase(
+            key: _two,
+            description: 'Tap on a day to edit the entry',
+            child: InkWell(
+              onTap: () {
+                    widget.onDaySelected(DateFormat('dd.MM.yyyy').format(date));
+              },
+              child: Container(
+                height: 20,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                        width: 40,
+                        height: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          emotionToAsset[entry.emotion]!
+                                      )
+                                      //fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                    Center(
+                        child: Text(
+                          day,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          );
+          else
           return InkWell(
             onTap: () {
                   widget.onDaySelected(DateFormat('dd.MM.yyyy').format(date));

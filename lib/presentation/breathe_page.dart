@@ -1,5 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:showcaseview/showcaseview.dart';
+
+import '../application/getter.dart';
 
 class BreathePage extends StatefulWidget {
   const BreathePage({Key? key}) : super(key: key);
@@ -21,10 +25,17 @@ class _BreathePageState extends State<BreathePage>
   Duration timeRemaining = Duration(seconds: 0); // Time remaining for the exercise;
 
   bool isExhale = false; // Flag to track inhale/exhale state
-
+  final GlobalKey _one = GlobalKey();
+  final GlobalKey _two = GlobalKey();
   @override
 void initState() {
   super.initState();
+  if(getter.get<GetStorage>().read('breathpageTutorialShown') != 'true'){
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+      ShowCaseWidget.of(context).startShowCase([_one, _two])
+    );
+    getter.get<GetStorage>().write('breathpageTutorialShown', 'true');
+  }
   _animationController = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 5),
@@ -46,6 +57,7 @@ void initState() {
     });
 
   selectedDuration = Duration(minutes: durationOptions[0]); // Set the initial selected duration
+  
 }
 
   @override
@@ -113,22 +125,26 @@ void initState() {
                           SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.only(right: 30.0),
-                            child: DropdownButton<int>(
-                              value: selectedDuration!.inMinutes,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedDuration = Duration(minutes: value!);
-                                });
-                              },
-                              items: durationOptions.map((duration) {
-                                return DropdownMenuItem<int>(
-                                  value: duration,
-                                  child: Text(
-                                    '$duration minute${duration > 1 ? 's' : ''}',
-                                    style: TextStyle(color: Colors.black45),
-                                  ),
-                                );
-                              }).toList(),
+                            child: Showcase(
+                              key: _one,
+                              description: 'Choose how long you are going to breath',
+                              child: DropdownButton<int>(
+                                value: selectedDuration!.inMinutes,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedDuration = Duration(minutes: value!);
+                                  });
+                                },
+                                items: durationOptions.map((duration) {
+                                  return DropdownMenuItem<int>(
+                                    value: duration,
+                                    child: Text(
+                                      '$duration minute${duration > 1 ? 's' : ''}',
+                                      style: TextStyle(color: Colors.black45),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                           ),
                         ],
@@ -146,41 +162,46 @@ void initState() {
                     stopBreathing();
                   }
                 },
-                child: Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color.fromRGBO(151, 209, 215, 1),
-                    boxShadow: isBreathing
-                        ? [
-                      BoxShadow(
-                        color: Color.fromRGBO(151, 209, 215, 1),
-                        blurRadius: 30,
-                        spreadRadius: 15 * scale,
-                      ),
-                    ]
-                        : null,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: Text(
-                          timeRemaining!.inSeconds > 0
-                              ? isExhale
-                              ? 'Exhale'
-                              : 'Inhale'
-                              : 'Start',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 36,
-                            fontFamily: 'BraahOne',
+                child: Showcase(
+                  key: _two,
+                  description: 'Press the button to start breathing exercise',
+                  targetShapeBorder: const CircleBorder(),
+                  child: Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color.fromRGBO(151, 209, 215, 1),
+                      boxShadow: isBreathing
+                          ? [
+                        BoxShadow(
+                          color: Color.fromRGBO(151, 209, 215, 1),
+                          blurRadius: 30,
+                          spreadRadius: 15 * scale,
+                        ),
+                      ]
+                          : null,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: Text(
+                            timeRemaining!.inSeconds > 0
+                                ? isExhale
+                                ? 'Exhale'
+                                : 'Inhale'
+                                : 'Start',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 36,
+                              fontFamily: 'BraahOne',
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
