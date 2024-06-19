@@ -1,9 +1,9 @@
 class DiaryEntry {
-  final String emotion;
+  String emotion;
   final String content;
   final String date;
 
-  const DiaryEntry(
+  DiaryEntry(
       {required this.emotion, required this.content, required this.date});
 
   factory DiaryEntry.fromJson(Map<String, dynamic> json){

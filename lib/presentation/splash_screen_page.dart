@@ -71,8 +71,8 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
           text: 'ZENZONE',
           waveDuration: const Duration(seconds: 4),
           // loadDuration: Duration(seconds: 4),
-          waveColor: const Color.fromRGBO(187, 173, 204, 1.0),
-          boxBackgroundColor: const Color.fromRGBO(189, 204, 173, 1),
+          waveColor: const Color.fromRGBO(62, 140, 175, 1.0),
+          boxBackgroundColor: Color.fromARGB(255, 248, 241, 229),
           textStyle: const TextStyle(
             fontFamily: 'BraahOne',
             fontSize: 80.0,

@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:zenzone/domain/quotes_controller.dart';
 
 import '../application/getter.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   String monsterAsset =
       'm${1 + getter.get<GetStorage>().read('monsterNumber')}.png';
+  final GlobalKey _one = GlobalKey();
+  final GlobalKey _two = GlobalKey();
+  @override
+  void initState() {
+    super.initState();
+    if(getter.get<GetStorage>().read('homepageTutorialShown') != 'true'){
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+        ShowCaseWidget.of(context).startShowCase([_one, _two])
+      );
+      getter.get<GetStorage>().write('homepageTutorialShown', 'true');
+    }
+  }
 
-  HomePage({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,13 +72,17 @@ class HomePage extends StatelessWidget {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
                       height: 100,
-                      child: Text(
-                        QuotesController.todaysQuote,
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontFamily: 'BraahOne',
-                          color: Color.fromARGB(255, 	207, 177, 125),
-                          // Set text color
+                      child: Showcase(
+                        key: _two,
+                        description: 'Here you will find a new quote every day',
+                        child: Text(
+                          QuotesController.todaysQuote,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontFamily: 'BraahOne',
+                            color: Color.fromARGB(255, 	207, 177, 125),
+                            // Set text color
+                          ),
                         ),
                       ),
                     ),
@@ -73,7 +96,10 @@ class HomePage extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.7,
-                          child: Image.asset('lib/assets/images/$monsterAsset')),
+                          child: Showcase(
+                            key: _one,
+                            description: 'Welcome to ZenZone! Let me guide you through the app',
+                            child: Image.asset('lib/assets/images/$monsterAsset'))),
                     ),
                   ),
                 ),

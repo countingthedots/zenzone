@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:zenzone/presentation/breathe_page.dart';
 import 'package:zenzone/presentation/home_page.dart';
 import 'package:zenzone/presentation/game_page.dart';
@@ -27,7 +29,16 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 248, 241, 229),
       resizeToAvoidBottomInset: false,
-      body: Pages[selectedPageIndex!],
+      body: ShowCaseWidget(
+        onStart: (index, key) {
+            print('onStart: $index, $key');
+          },
+          onComplete: (index, key) {
+            print('onComplete: $index, $key');
+          },
+          blurValue: 1,
+          autoPlayDelay: const Duration(seconds: 3),
+          builder: (context) => Pages[selectedPageIndex!]),
       bottomNavigationBar: BottomAppBar(
         height: 80,
           color: Color.fromARGB(255, 229, 197, 141),

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:zenzone/application/getter.dart';
 import 'package:zenzone/domain/models/diary_entry.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +20,6 @@ class DiaryPage extends StatefulWidget {
 class _DiaryPageState extends State<DiaryPage> {
   String date = DateFormat('dd.MM.yyyy').format(DateTime.now());
   bool isCalendarVisible = false;
-  late EmotionSelector emotionSelector;
   String? selectedDate;
   final TextEditingController _controller = TextEditingController();
   DiaryEntry? _entry;
@@ -67,7 +67,7 @@ class _DiaryPageState extends State<DiaryPage> {
                               shouldUpdatePage = false;
                             }
                             
-                            return NewEntryWidget(entry: _entry!, controller: _controller, onSave: onEntrySaved);
+                            return NewEntryWidget(entry: _entry!, controller: _controller, onSave: onEntrySaved, canGoBack: true,);
                         }
                         else if (!snapshot.data!.any((e) => e.date == date)){
                           if(shouldUpdatePage)
@@ -80,7 +80,7 @@ class _DiaryPageState extends State<DiaryPage> {
                             emotion: '',
                             content: '',
                           );
-                          return NewEntryWidget(entry: _entry!, controller: _controller, onSave: onEntrySaved);
+                          return NewEntryWidget(entry: _entry!, controller: _controller, onSave: onEntrySaved, canGoBack: false,);
                         }
                         else{
                           return EmotionCalendar(
@@ -109,6 +109,7 @@ class _DiaryPageState extends State<DiaryPage> {
         shouldUpdatePage = true;
         selectedDate = null;
       });
+      getter.get<GetStorage>().write('selectedEmotion', null);
     });
   } 
 }
