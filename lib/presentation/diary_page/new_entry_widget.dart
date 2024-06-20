@@ -42,7 +42,7 @@ class _NewEntryWidgetState extends State<NewEntryWidget> {
     
   }
 
-  @override
+  
   @override
 Widget build(BuildContext context) {
   return Showcase(
@@ -50,127 +50,127 @@ Widget build(BuildContext context) {
       description: 'This page will help you to track you mood',
       child: Container(
         height: MediaQuery.of(context).size.height - 100,
-        child: Padding( // Add Padding
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom > 100 ?  MediaQuery.of(context).viewInsets.bottom - 90 : 0 ),
+        child: Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom > 100 ? MediaQuery.of(context).viewInsets.bottom - 60 : 0),
           child: Column(
-            children: [
-              Spacer(flex: 2,),
-              
-             
-              Row(
+              children: [
+                Spacer(flex: 2,),
                 
-                children: [
-                  widget.canGoBack ? Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Container(
-                    
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromARGB(255, 207, 177, 125),
-                    ),
-                    child: IconButton(
-                      onPressed: widget.onSave,
-                      icon: Icon(Icons.arrow_back_ios_new, color: Color.fromARGB(255, 248, 241, 229), size: 30,)
+               
+                Row(
+                  
+                  children: [
+                    widget.canGoBack ? Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Container(
+                      
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromARGB(255, 207, 177, 125),
+                      ),
+                      child: IconButton(
+                        onPressed: widget.onSave,
+                        icon: Icon(Icons.arrow_back_ios_new, color: Color.fromARGB(255, 248, 241, 229), size: 30,)
+                      ),
                     ),
                   ),
+                ) : Container(),
+                const Spacer(),
+                    const Text("Hello!\nHow are you feeling now?",
+                        style: TextStyle(
+                            fontFamily: 'BraahOne',
+                            fontSize: 24,
+                            color: Color.fromARGB(255, 207, 177, 125))),
+                            const Spacer(),
+                  ],
+                  
                 ),
-              ) : Container(),
-              const Spacer(),
-                  const Text("Hello!\nHow are you feeling now?",
-                      style: TextStyle(
-                          fontFamily: 'BraahOne',
-                          fontSize: 24,
-                          color: Color.fromARGB(255, 207, 177, 125))),
-                          const Spacer(),
-                ],
-                
-              ),
-              Spacer(flex: 2,),
-              Showcase(
-                key: _two, 
-                description: 'First, choose your emotion',
-                child: emotionSelector),
-              Spacer(flex: 7,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Theme(
-                  data: Theme.of(context).copyWith(
-                      textSelectionTheme: const TextSelectionThemeData(
-                          selectionColor: Colors.blueGrey)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Showcase(
-                      key: _three,
-                      description: 'Then, optionally add some note',
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(image: AssetImage('lib/assets/images/grid.jpg'),
-                           fit: BoxFit.cover,
-                           repeat: ImageRepeat.repeat
-                           ),
-                        ),
-                        child: TextField(
-                            controller: widget.controller,
-                            minLines: 5,
-                            maxLines: 10,
-                            decoration: const InputDecoration(
-                              labelText: 'Tell us how was your day',
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.blueGrey, // Set the outline border color
-                                  width: 2.0, // Set the outline border width
+                Spacer(flex: 2,),
+                Showcase(
+                  key: _two, 
+                  description: 'First, choose your emotion',
+                  child: emotionSelector),
+                Spacer(flex: 7,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                        textSelectionTheme: const TextSelectionThemeData(
+                            selectionColor: Colors.blueGrey)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Showcase(
+                        key: _three,
+                        description: 'Then, optionally add some note',
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(image: AssetImage('lib/assets/images/grid.jpg'),
+                             fit: BoxFit.cover,
+                             repeat: ImageRepeat.repeat
+                             ),
+                          ),
+                          child: TextField(
+                              controller: widget.controller,
+                              minLines: 5,
+                              maxLines: 10,
+                              decoration: const InputDecoration(
+                                labelText: 'Tell us how was your day',
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.blueGrey, // Set the outline border color
+                                    width: 2.0, // Set the outline border width
+                                  ),
                                 ),
-                              ),
-                              labelStyle: TextStyle(
-                                fontSize: 20,
-                                color: Colors.blueGrey, // Set the color of the labeled text
-                              ),
-                              //contentPadding: EdgeInsets.only(bottom: 100),
-                            )),
+                                labelStyle: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.blueGrey, // Set the color of the labeled text
+                                ),
+                                //contentPadding: EdgeInsets.only(bottom: 100),
+                              )),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 	207, 177, 125),
-                    minimumSize: Size(double.infinity, 50), // Set the minimum width and height
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25), // Set the border radius
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 	207, 177, 125),
+                      minimumSize: Size(double.infinity, 50), // Set the minimum width and height
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25), // Set the border radius
+                      ),
+                    ),
+                    onPressed: () {
+                      if (getter.get<GetStorage>().read('selectedEmotion') == null && widget.entry.emotion == "") {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: const Text('First, choose the emotion'),
+                          action: SnackBarAction(
+                            label: 'Ok',
+                            onPressed: () {},
+                          ),
+                        ));
+                      } else {
+                        String em = getter.get<GetStorage>().read('selectedEmotion') == null ? widget.entry.emotion : getter.get<GetStorage>().read('selectedEmotion')!;
+                        getter.get<DiaryDomainController>().saveDiaryEntry(
+                            DiaryEntry(date: widget.entry.date, content: widget.controller.text, emotion: em)).then((value) {
+                          FocusScope.of(context).unfocus();
+                          widget.onSave();
+                        });
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text('Save', style: TextStyle(color: Colors.white60, fontSize: 24, fontFamily: 'BraahOne')),
                     ),
                   ),
-                  onPressed: () {
-                    if (getter.get<GetStorage>().read('selectedEmotion') == null && widget.entry.emotion == "") {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: const Text('First, choose the emotion'),
-                        action: SnackBarAction(
-                          label: 'Ok',
-                          onPressed: () {},
-                        ),
-                      ));
-                    } else {
-                      String em = getter.get<GetStorage>().read('selectedEmotion') == null ? widget.entry.emotion : getter.get<GetStorage>().read('selectedEmotion')!;
-                      getter.get<DiaryDomainController>().saveDiaryEntry(
-                          widget.entry.date, widget.controller.text, em).then((value) {
-                        FocusScope.of(context).unfocus();
-                        widget.onSave();
-                      });
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text('Save', style: TextStyle(color: Colors.white60, fontSize: 24, fontFamily: 'BraahOne')),
-                  ),
                 ),
-              ),
-              Spacer(flex: 1,),
-            ],
-          ),
+                Spacer(flex: 1,),
+              ],
+            ),
         ),
       ),
     );

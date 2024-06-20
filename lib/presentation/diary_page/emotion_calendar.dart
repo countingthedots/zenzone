@@ -50,7 +50,7 @@ class _EmotionCalendarState extends State<EmotionCalendar> {
       child: Column(
         children: [
           Spacer(flex: 2,),
-          const Text('Emotion Calendar', style: TextStyle(fontSize: 36, fontFamily: 'BraahOne', color: Color.fromARGB(255, 	126, 109, 76))),
+          const Text('Emotion Calendar', style: TextStyle(fontSize: 36, fontFamily: 'BraahOne', color: Color.fromRGBO(62, 140, 175, 1.0))),
           Spacer(),
           _buildWeeks(),
           Showcase(
