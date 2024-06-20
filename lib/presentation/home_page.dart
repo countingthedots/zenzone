@@ -6,8 +6,12 @@ import 'package:zenzone/domain/quotes_controller.dart';
 import '../application/getter.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  HomePage({super.key, required this.homeShowcase, required this.diaryShowase, required this.exerciseShowcase, required this.breathShowcase});
 
+  final GlobalKey homeShowcase;
+  final GlobalKey diaryShowase;
+  final GlobalKey exerciseShowcase;
+  final GlobalKey breathShowcase;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -22,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     if(getter.get<GetStorage>().read('homepageTutorialShown') != 'true'){
       WidgetsBinding.instance.addPostFrameCallback((_) =>
-        ShowCaseWidget.of(context).startShowCase([_one, _two])
+        ShowCaseWidget.of(context).startShowCase([_one, _two, widget.homeShowcase, widget.diaryShowase, widget.exerciseShowcase, widget.breathShowcase])
       );
       getter.get<GetStorage>().write('homepageTutorialShown', 'true');
     }
@@ -57,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                           fontSize: 36,
                           fontFamily: 'BraahOne',
-                          color: Color.fromARGB(255, 	207, 177, 125),
+                          color: Color.fromRGBO(62, 140, 175, 1.0),
                           // Set text color
                         ),
                       ),
@@ -80,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                           style: const TextStyle(
                             fontSize: 22,
                             fontFamily: 'BraahOne',
-                            color: Color.fromARGB(255, 	207, 177, 125),
+                            color: Color.fromRGBO(62, 140, 175, 1.0),
                             // Set text color
                           ),
                         ),
