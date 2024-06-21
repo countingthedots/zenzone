@@ -3,8 +3,7 @@
    <application
         android:label="zenzone"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
-        android:adaptiveIcon="@drawable/ic_launcher_adaptive">
+        android:icon="@drawable/ic_launcher_adaptive">
         <activity
             android:name=".MainActivity"
             android:exported="true"
