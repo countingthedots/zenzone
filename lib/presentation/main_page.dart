@@ -9,7 +9,7 @@ import 'package:zenzone/application/getter.dart';
 import 'package:zenzone/presentation/breathe_page.dart';
 import 'package:zenzone/presentation/home_page.dart';
 import 'package:zenzone/presentation/game_page.dart';
-import 'package:zenzone/presentation/diary_page.dart';
+import 'package:zenzone/presentation/diary_page_bloc.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key /*, this.selectedPageIndex*/}) : super(key: key);

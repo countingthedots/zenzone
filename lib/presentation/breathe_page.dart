@@ -74,7 +74,7 @@ void initState() {
     return Center(
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 80),
+              const Spacer(flex: 2,),
               Row(
                 children: [
                   SizedBox(
@@ -153,7 +153,7 @@ void initState() {
                   ),
                 ],
               ),
-              SizedBox(height: 125),
+              const Spacer(flex: 4,),
               GestureDetector(
                 onTap: () {
                   if (!isBreathing) {
@@ -205,6 +205,7 @@ void initState() {
                   ),
                 ),
               ),
+              const Spacer(flex: 4,),
             ],
           ),
         );

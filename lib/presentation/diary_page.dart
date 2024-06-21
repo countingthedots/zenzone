@@ -18,7 +18,7 @@ class DiaryPage extends StatefulWidget {
 }
 
 class _DiaryPageState extends State<DiaryPage> {
-  String date = DateFormat('dd.MM.yyyy').format(DateTime.now());
+  String today = DateFormat('dd.MM.yyyy').format(DateTime.now());
   bool isCalendarVisible = false;
   String? selectedDate;
   final TextEditingController _controller = TextEditingController();
@@ -38,64 +38,61 @@ class _DiaryPageState extends State<DiaryPage> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            AnimatedSwitcher(
-              duration: Duration(seconds: 1),
-              child: FutureBuilder<List<DiaryEntry>>(
-                key: ValueKey(shouldUpdatePage),
-                future: futureDiary,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const Center(child: CircularProgressIndicator());
-                    default:
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else {
-                        
-                        if(selectedDate != null) {
-                            _entry = snapshot.data!.firstWhere(
-                              (entry) => entry.date == selectedDate,
-                              orElse: () => DiaryEntry(
-                                date: selectedDate!,
-                                emotion: '',
-                                content: '',
-                              ),
-                            );
-                            if(shouldUpdatePage)
-                            {
-                              _controller.text = _entry!.content;
-                              shouldUpdatePage = false;
-                            }
-                            
-                            return NewEntryWidget(entry: _entry!, controller: _controller, onSave: onEntrySaved, canGoBack: true,);
-                        }
-                        else if (!snapshot.data!.any((e) => e.date == date)){
+            FutureBuilder<List<DiaryEntry>>(
+              key: ValueKey(shouldUpdatePage),
+              future: futureDiary,
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return const Center(child: CircularProgressIndicator());
+                  default:
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      
+                      if(selectedDate != null) {
+                          _entry = snapshot.data!.firstWhere(
+                            (entry) => entry.date == selectedDate,
+                            orElse: () => DiaryEntry(
+                              date: selectedDate!,
+                              emotion: '',
+                              content: '',
+                            ),
+                          );
                           if(shouldUpdatePage)
                           {
-                            _controller.text = '';
+                            _controller.text = _entry!.content;
                             shouldUpdatePage = false;
                           }
-                          _entry = DiaryEntry(
-                            date: date,
-                            emotion: '',
-                            content: '',
-                          );
-                          return NewEntryWidget(entry: _entry!, controller: _controller, onSave: onEntrySaved, canGoBack: false,);
-                        }
-                        else{
-                          return EmotionCalendar(
-                            diary: snapshot.data!,
-                            onDaySelected: (selectedDate) {
-                              setState(() {
-                                this.selectedDate = selectedDate;
-                              });
-                            },
-                          );
-                        }
+                          
+                          return NewEntryWidget(entry: _entry!, controller: _controller, onSave: onEntrySaved, canGoBack: true,);
                       }
-                  }
-                },
-              ),
+                      else if (!snapshot.data!.any((e) => e.date == today)){
+                        if(shouldUpdatePage)
+                        {
+                          _controller.text = '';
+                          shouldUpdatePage = false;
+                        }
+                        _entry = DiaryEntry(
+                          date: today,
+                          emotion: '',
+                          content: '',
+                        );
+                        return NewEntryWidget(entry: _entry!, controller: _controller, onSave: onEntrySaved, canGoBack: false,);
+                      }
+                      else{
+                        return EmotionCalendar(
+                          diary: snapshot.data!,
+                          onDaySelected: (selectedDate) {
+                            setState(() {
+                              this.selectedDate = selectedDate;
+                            });
+                          },
+                        );
+                      }
+                    }
+                }
+              },
             ),
           ],
         ),
