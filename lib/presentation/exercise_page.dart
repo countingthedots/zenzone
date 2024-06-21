@@ -32,7 +32,7 @@ class _ExercisePageState extends State<ExercisePage> {
           //crossAxisAlignment: CrossAxisAlignment.center,
           //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const SizedBox(height: 40),
+            const SizedBox(height: 80),
             Align(
               alignment: Alignment.topLeft,
               child: Row(
