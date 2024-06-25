@@ -9,7 +9,7 @@ class DiaryRepo{
 
   static Future<List<DiaryEntry>> loadDiary() async {
     final diary = getter.get<GetStorage>().read('Diary');
-    if (diary == null) {
+    if (diary == null && getter.get<GetStorage>().read('skippedAuth') != true) {
       final user = FirebaseAuth.instance.currentUser!;
       final db = FirebaseFirestore.instance;
       final userDocRef = db.collection('diaries').doc(user.uid);

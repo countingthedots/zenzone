@@ -22,7 +22,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     // Simulating a delay of 7 seconds for the splash screen
     await Future.delayed(const Duration(seconds: 7));
 
-    if (FirebaseAuth.instance.currentUser != null) {
+    if (FirebaseAuth.instance.currentUser != null || getter.get<GetStorage>().read('skippedAuth') == true) {
       String? isIntroDone = getter.get<GetStorage>().read('isIntroDone');
       if (isIntroDone == 'true')
         context.go('/home');

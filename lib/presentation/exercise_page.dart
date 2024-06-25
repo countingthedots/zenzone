@@ -73,6 +73,7 @@ class _ExercisePageState extends State<ExercisePage> {
                     itemCount: _myList.length,
                     itemBuilder: (context, index) {
                       return AnimatedDefaultTextStyle(
+                        curve: Curves.easeInOutCubic,
                         duration: const Duration(milliseconds: 400),
                         style: TextStyle(
                           fontFamily: 'BraahOne',
