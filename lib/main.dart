@@ -43,7 +43,7 @@ void initState() {
   super.initState();
   WidgetsBinding.instance.addPostFrameCallback((_) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarColor: Color.fromARGB(255, 231, 203, 154),
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
   });
@@ -51,10 +51,6 @@ void initState() {
 
   @override
   Widget build(BuildContext context) {
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        systemNavigationBarColor: Color.fromARGB(255, 231, 203, 154), // Navigation bar
-        systemNavigationBarIconBrightness: Brightness.dark, // Navigation bar icons' brightness
-      ));
       return MaterialApp.router(
         title: 'ZenZone',
         routerDelegate: goRouter.routerDelegate,
